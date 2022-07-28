@@ -43,7 +43,37 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           height: 100,
         ),
-        const Padding(padding: const EdgeInsets.only(left: 20, right: 20)),
+        Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40),
+            child: Row(
+              children: [
+                GestureDetector(
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      child: Icon(Icons.add),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Color(0xFF716f72),
+                            width: 1,
+                          )),
+                    ),
+                    onTap: () {
+                      Provider.of<DataClass>(context, listen: false)
+                          .incrementX();
+                    }),
+                Spacer(),
+                Container(
+                  height: 60,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.black),
+                  child: Padding(padding: EdgeInsets.symmetric(horizontal: 40)),
+                )
+              ],
+            )),
         const Spacer(),
       ]),
     );
