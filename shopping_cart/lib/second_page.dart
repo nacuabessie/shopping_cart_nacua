@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_cart/second_page.dart';
 
 import 'data_class.dart';
+import 'home_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class SecondPage extends StatelessWidget {
+  const SecondPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                     child: Container(
                       width: 60,
                       height: 60,
-                      child: Icon(Icons.add),
+                      child: Icon(Icons.remove),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
@@ -54,11 +54,9 @@ class HomePage extends StatelessWidget {
                           )),
                     ),
                     onTap: () {
-                      if (Provider.of<DataClass>(context, listen: false).x <
-                          5) {
-                        Provider.of<DataClass>(context, listen: false)
-                            .incrementX();
-                      } else {
+                      if (context.read<DataClass>().x > 0) {
+                        context.read<DataClass>().decrementX();
+                      }else {
                         Get.snackbar("Item", "Can not more than this",
                             backgroundColor: Colors.black,
                             colorText: Colors.white,
@@ -67,40 +65,43 @@ class HomePage extends StatelessWidget {
                               style:
                                   TextStyle(fontSize: 40, color: Colors.white),
                             ),
-                            messageText: Text("Can not be less than this",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white)));
+                            messageText: Text("Can not be less than this", 
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white
+                            ))
+                            );
                       }
                     }),
+
                 Spacer(),
+
                 Container(
                   height: 60,
                   width: 200,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.black),
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          GestureDetector(
-                              onTap: () {
-                                Get.to(() => SecondPage(),
-                                    transition: Transition.upToDown,
-                                    duration: Duration(seconds: 1));
-                              },
-                              child: const Text(
-                                "Next Page",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              )),
-                          Spacer(),
-                          Icon(Icons.skip_next_outlined, color: Colors.white)
-                        ],
-                      )),
-                )
-              ],
+                  child: Padding(padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(children: [
+                      Spacer(),
+                      Icon(Icons.skip_previous_outlined, color:Color(0xFFfefeff)),  
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(()=>HomePage(), transition: Transition.downToUp, duration: Duration(seconds: 1));
+                        }, 
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text("Prev Page", style: TextStyle(
+                                fontSize: 20,color:Color(0xFFfefeff)
+                            ),),
+                          ],
+                        ),
+                      ),                  
+                    ],)
+                ),)
+            ],
             )),
       ]),
     );

@@ -7,4 +7,9 @@ class DataClass extends ChangeNotifier {
     _x++;
     notifyListeners();
   }
+
+    void decrementX() {
+    _x--;
+    notifyListeners();
+  }
 }
